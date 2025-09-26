@@ -10,6 +10,12 @@ class SplashScreen extends GetView<SplashController>{
   const SplashScreen({super.key});
 
   @override
+  StatelessElement createElement() {
+    controller.startTimer();
+    // TODO: implement createElement
+    return super.createElement();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
