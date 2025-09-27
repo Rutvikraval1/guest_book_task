@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:guestbook/core/theme/app_style.dart';
 import 'package:guestbook/core/theme/colors.dart';
 import 'package:guestbook/core/utils/app_image.dart';
 
+import '../../features/dashboard/controllers/dashboard_controller.dart';
 import 'asset_img/asset_image_show.dart';
 
 class HeaderSection extends StatelessWidget {
@@ -10,6 +12,7 @@ class HeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DashboardController>(); // here is fine
     return Container(
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -28,7 +31,9 @@ class HeaderSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              ImageShow.svgImgAsset(AppImages.icMenu,height: 17),
+              InkWell(onTap: (){
+                controller.toggleMenuDisable();
+              },child: ImageShow.svgImgAsset(AppImages.icMenu,height: 17)),
               const SizedBox(width: 30),
               ImageShow.svgImgAsset(AppImages.icSwapArrow,),
               const SizedBox(width: 30),

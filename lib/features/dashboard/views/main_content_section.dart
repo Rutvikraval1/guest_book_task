@@ -1,233 +1,392 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:guestbook/core/theme/app_style.dart';
 import 'package:guestbook/core/theme/colors.dart';
 import 'package:guestbook/core/utils/app_image.dart';
 import 'package:guestbook/core/widgets/asset_img/asset_image_show.dart';
+import 'package:guestbook/core/widgets/button/custom_elevated_btn.dart';
 
-import '../../../core/widgets/button/custom_elevated_btn.dart';
+import '../../../core/utils/responsive.dart';
+import '../controllers/dashboard_controller.dart';
 
-class MainContentSection extends StatefulWidget {
+class MainContentSection extends StatelessWidget {
   const MainContentSection({super.key});
 
-  @override
-  State<MainContentSection> createState() => _MainContentSectionState();
-}
 
-class _MainContentSectionState extends State<MainContentSection> {
-  int selectedIndex = 0;
 
-  final List<String> tabs = [
-    'Profile',
-    'Reservation',
-    'Payment',
-    'Feedback',
-    'Order History',
-  ];
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, top: 24, right: 20),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ImageShow.svgImgAsset(AppImages.icGuestBook, height: 45),
-                  const SizedBox(height: 12),
-                  Text('Guest Book', style: AppStyle.text16SemiBoldBlack26),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      'The guest book feature remembers your guests dietary needs, allergies, and favorite'
-                      'dishes. It organizes dining preferences for a customized and memorable'
-                      'experience, ensuring each visit is tailored to their individual needs.',
-                      textAlign: TextAlign.center,
-                      style: AppStyle.text16RegularGray4E,
+    final controller = Get.find<DashboardController>(); // here is fine
+    return LayoutBuilder(builder: (context, constraints) {
+      final width = constraints.maxWidth;
+
+      final isSmall = Responsive.isSmall(context);
+      final isMedium = Responsive.isMedium(context);
+      final cardWidth = Responsive.cardWidth(context);
+      final cardHeight = MediaQuery.of(context).size.height * 0.32;
+
+      return Obx(()=>SingleChildScrollView(
+          padding: const EdgeInsets.only(left: 20, top: 24, right: 20, bottom: 24),
+          child: GestureDetector(
+            onTap: (){
+              controller.toggleMenuDisable(isValue: true);
+            },
+            child: Column(
+              children: [
+                // Header card
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 120),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageShow.svgImgAsset(AppImages.icGuestBook, height: 45),
+                        const SizedBox(height: 12),
+                        Text('Guest Book', style: AppStyle.text16SemiBoldBlack26),
+                        const SizedBox(height: 12),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          child: Text(
+                            'The guest book feature remembers your guests dietary needs, allergies, and favorite '
+                                'dishes. It organizes dining preferences for a customized and memorable '
+                                'experience, ensuring each visit is tailored to their individual needs.',
+                            textAlign: TextAlign.center,
+                            style: AppStyle.text16RegularGray4E,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                alignment: Alignment.center,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: tabs.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: _buildTab(tabs[index], selectedIndex == index),
-                    );
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(height: 18),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 28,
-                            backgroundColor: Colors.grey,
-                            child: ImageShow.imgAsset(AppImages.icProfilePic),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Lia Thomas',
-                            style: AppStyle.text16SemiBoldBlack26,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'lia.thomas516@reddit.com',
-                            style: AppStyle.text12MediumBlack26,
-                          ),
-                          Text(
-                            '+1 212-450-7890',
-                            style: AppStyle.text12MediumBlack26,
-                          ),
-                          const SizedBox(height: 16),
-                          CustomElevatedButton(
-                            title: 'Add Tags',
-                            onPress: () {},
-                          ),
-                        ],
-                      ),
+                const SizedBox(height: 18),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    VerticalDivider(
-                      color: const Color(0x4D8E8E93),
-                      thickness: 2,
-                      endIndent: 10,
-                      indent: 10,
-                      width: 2,
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteF8,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: _buildStatsRow(),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(controller.tabs.length, (index) {
+                          final isActive = index == controller.selectedIndex.value;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: GestureDetector(
+                              onTap: (){
+                                // setState(() => selectedIndex = index);
+                                controller.changeIndex(index);
+                                controller.toggleMenuDisable(isValue: true);
+                              },
+                              child: _buildTab(controller.tabs[index], isActive),
                             ),
-                            SizedBox(height: 16,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  // width: MediaQuery.of(context).size.width/8,
-                                  height: MediaQuery.of(context).size.height/3,
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.whiteF8,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: _buildPersonalInfo(),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width/8,
-                                  height: MediaQuery.of(context).size.height/3,
-                                  padding: const EdgeInsets.all(13),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.whiteF8,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: _buildLoyaltySection(),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width/8,
-                                  height: MediaQuery.of(context).size.height/3,
-                                  padding: const EdgeInsets.all(13),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.whiteF8,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: _buildVisitsSection(),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                          );
+                        }),
                       ),
                     ),
-                  ],
+                  ),
                 ),
+                const SizedBox(height: 18),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: 180),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: (isSmall)
+                          ? Column(
+                        children: [
+                          _profileHeader(isSmall),
+                          const SizedBox(height: 12),
+                          _statsCard(isSmall),
+                          const SizedBox(height: 12),
+                          _cardsStacked(cardHeight),
+                        ],
+                      )
+                          : IntrinsicHeight(
+                            child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                            SizedBox(
+                              width: 190,
+                              child: _profileHeader(isSmall),
+                            ),
+                            const VerticalDivider(
+                                color: Color(0x4D8E8E93), thickness: 2, width: 20),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _statsCard(isSmall),
+                                  const SizedBox(height: 12),
+                                  if(controller.isMenuDisable.value)
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                        flex: 2,
+                                        child: SizedBox(
+                                          width: cardWidth,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(13),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.whiteF8,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: _buildLoyaltySection(),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Flexible(
+                                        flex: 2,
+                                        child: SizedBox(
+                                          width: cardWidth,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(13),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.whiteF8,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: _buildVisitsSection(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  if(controller.isMenuDisable.value)
+                                  const SizedBox(height: 12),
+                                  if(controller.isMenuDisable.value)
+                                  Flexible(
+                                    flex: (isMedium ? 4 : 3),
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          maxWidth: isMedium ? double.infinity : cardWidth),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.whiteF8,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: _buildPersonalInfo(),
+                                      ),
+                                    ),
+                                  ),
+                                  if(!controller.isMenuDisable.value)
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                        flex: (isMedium ? 4 : 3),
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxWidth: isMedium ? double.infinity : cardWidth),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(16),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.whiteF8,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: _buildPersonalInfo(),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Flexible(
+                                        flex: 2,
+                                        child: SizedBox(
+                                          width: cardWidth,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(13),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.whiteF8,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: _buildLoyaltySection(),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Flexible(
+                                        flex: 2,
+                                        child: SizedBox(
+                                          width: cardWidth,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(13),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.whiteF8,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: _buildVisitsSection(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                                                ],
+                                              ),
+                          ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 28),
+
+                // Reusable section cards
+                controller.isMenuDisable.value?
+                  Column(
+                    children: [
+                      _buildSectionCard(
+                        'ALLERGIES',
+                        'No Allergies',
+                        AppImages.icKitchen,
+                        'Add',
+                      ),
+                      const SizedBox(height: 18),
+                      _buildSectionCard('UPCOMING VISITS', 'No Upcoming Visits', AppImages.icStore, 'Book A Visit'),
+                    ],
+                  ):
+                  Row(
+                    children: [
+                      Expanded(child: _buildSectionCard(
+                        'ALLERGIES',
+                        'No Allergies',
+                        AppImages.icKitchen,
+                        'Add',
+                      )),
+                      const SizedBox(width: 18),
+                      Expanded(child: _buildSectionCard('UPCOMING VISITS', 'No Upcoming Visits', AppImages.icStore, 'Book A Visit'))
+                    ],
+                  ),
+                  
+                const SizedBox(height: 18),
+                _buildNotesSection(),
+                const SizedBox(height: 18),
+                _buildSectionCard('RECENT ORDERS', 'No Recent Orders to Show', AppImages.icDinner, null),
+                const SizedBox(height: 18),
+                _buildSectionCard('Online reviews', 'No Online Review to Show', AppImages.icNoReview, null),
+                const SizedBox(height: 24),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _profileHeader(bool isSmall) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 34,
+          backgroundColor: Colors.grey,
+          child: ImageShow.imgAsset(AppImages.icProfilePic),
+        ),
+        const SizedBox(height: 12),
+        Text('Lia Thomas', style: AppStyle.text16SemiBoldBlack26),
+        const SizedBox(height: 6),
+        Text('lia.thomas516@reddit.com', style: AppStyle.text12MediumBlack26),
+        Text('+1 212-450-7890', style: AppStyle.text12MediumBlack26),
+        const SizedBox(height: 12),
+        CustomElevatedButton(title: 'Add Tags', onPress: () {}),
+      ],
+    );
+  }
+
+  Widget _statsCard(bool isSmall) {
+    final stats = [
+      {'label': 'Last Visit', 'value': '-- -- --'},
+      {'label': 'Average Spend', 'value': '\$0.00'},
+      {'label': 'Lifetime Spend', 'value': '\$0.00'},
+      {'label': 'Total Orders', 'value': '0'},
+      {'label': 'Average Tip', 'value': '\$0.00'},
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.whiteF8,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(stats.length * 2 - 1, (index) {
+          if (index.isOdd) {
+            // Divider between items
+            return Container(
+              width: 1,
+              height: 40,
+              color: AppColors.black26.withOpacity(0.2), // customize color
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+            );
+          }
+          final stat = stats[index ~/ 2];
+          return Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(stat['value'] ?? '', style: AppStyle.text16SemiBoldBlack26),
+                const SizedBox(height: 10),
+                Text(stat['label'] ?? '', style: AppStyle.text12MediumBlack26),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+
+  Widget _cardsStacked(double height) {
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: height * 0.6,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(color: AppColors.whiteF8, borderRadius: BorderRadius.circular(10)),
+          child: _buildPersonalInfo(),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: height * 0.4,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(color: AppColors.whiteF8, borderRadius: BorderRadius.circular(10)),
+                child: _buildLoyaltySection(),
               ),
             ),
-            const SizedBox(height: 31),
-            // Allergies section
-            _buildSectionCard(
-              'ALLERGIES',
-              'No Allergies',
-              AppImages.icKitchen,
-              'Add',
+            const SizedBox(width: 12),
+            Expanded(
+              child: Container(
+                height: height * 0.4,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(color: AppColors.whiteF8, borderRadius: BorderRadius.circular(10)),
+                child: _buildVisitsSection(),
+              ),
             ),
-            const SizedBox(height: 24),
-            // Upcoming visits section
-            _buildSectionCard(
-              'UPCOMING VISITS',
-              'No Upcoming Visits',
-              AppImages.icStore,
-              'Book A Visit',
-            ),
-            const SizedBox(height: 25),
-            // Notes section
-            _buildNotesSection(),
-            const SizedBox(height: 23),
-            // Recent orders section
-            _buildSectionCard(
-              'RECENT ORDERS',
-              'No Recent Orders to Show',
-              AppImages.icDinner,
-              null,
-            ),
-            const SizedBox(height: 24),
-            _buildSectionCard(
-              'Online reviews',
-              'No Online Review to Show',
-              AppImages.icNoReview,
-              null,
-            ),
-            const SizedBox(height: 24),
           ],
         ),
-      ),
+      ],
     );
   }
 
@@ -237,83 +396,50 @@ class _MainContentSectionState extends State<MainContentSection> {
         color: isActive ? const Color(0xFF666666) : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       alignment: Alignment.center,
       child: Text(
         text,
         style: TextStyle(
           color: isActive ? AppColors.white : AppColors.black26,
           fontSize: 16,
-          fontFamily: isActive
-              ? FontName.montserratSemiBold
-              : FontName.montserratMedium,
+          fontFamily: isActive ? FontName.montserratSemiBold : FontName.montserratMedium,
         ),
       ),
     );
   }
 
-  Widget _buildStatsRow() {
-    final stats = [
-      {'label': 'Last Visit', 'value': '-- -- --'},
-      {'label': 'Average Spend', 'value': '\$0.00'},
-      {'label': 'Lifetime Spend', 'value': '\$0.00'},
-      {'label': 'Total Orders', 'value': '0'},
-      {'label': 'Average Tip', 'value': '\$0.00'},
-    ];
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: stats.map((stat) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(stat['value']!, style: AppStyle.text16SemiBoldBlack26),
-            const SizedBox(height: 12),
-            Text(stat['label']!, style: AppStyle.text12MediumBlack26),
-          ],
-        );
-      }).toList(),
-    );
-  }
-
-  Widget  _buildPersonalInfo() {
+  Widget _buildPersonalInfo() {
     final info = [
       {'label': 'Loyalty', 'value': 'RF|'},
       {'label': 'Since', 'value': 'Enter'},
       {'label': 'Birthday', 'value': 'Enter'},
-      {'label': 'Anniversary', 'value': 'Enter'},
+      // {'label': 'Anniversary', 'value': 'Enter'},
     ];
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: info.map((item) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    item['label']!,
-                    style: AppStyle.text14MediumGray60
-                  ),
+                  Text(item['label']!, style: AppStyle.text14MediumGray60),
                   Text(
                     item['value']!,
                     style: TextStyle(
-                      color: item['label'] == 'Loyalty'
-                          ? AppColors.black26
-                          : AppColors.whiteD2,
+                      color: item['label'] == 'Loyalty' ? AppColors.black26 : AppColors.whiteD2,
                       fontSize: 14,
-                      fontWeight: item['label'] == 'Loyalty'
-                          ? FontWeight.w600
-                          : FontWeight.w500,
-                      fontFamily: item['label'] == 'Loyalty'?
-                      FontName.montserratSemiBold: FontName.montserratMedium,
+                      fontWeight: item['label'] == 'Loyalty' ? FontWeight.w600 : FontWeight.w500,
+                      fontFamily: item['label'] == 'Loyalty' ? FontName.montserratSemiBold : FontName.montserratMedium,
                     ),
                   ),
                 ],
               ),
-              Divider()
+              const Divider(),
             ],
           ),
         );
@@ -325,30 +451,23 @@ class _MainContentSectionState extends State<MainContentSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
-          'LOYALTY',
-          style: AppStyle.text14MediumGray8B,
-        ),
+        Text('LOYALTY', style: AppStyle.text14MediumGray8B),
         const SizedBox(height: 14),
-        Row(
-          children: [
-            _buildStatItem('0', 'Earned'),
-            const SizedBox(width: 10),
-            Container(width: 1, height: 48, color: Colors.grey.shade300),
-            const SizedBox(width: 10),
-            _buildStatItem('0', 'Redeemed'),
-          ],
-        ),
+        Row(children: [
+          _buildStatItem('0', 'Earned'),
+          const SizedBox(width: 10),
+          Container(width: 1, height: 48, color: Colors.grey.shade300),
+          const SizedBox(width: 10),
+          _buildStatItem('0', 'Redeemed'),
+        ]),
         const SizedBox(height: 9),
-        Row(
-          children: [
-            _buildStatItem('0', 'Available'),
-            const SizedBox(width: 10),
-            Container(width: 1, height: 46, color: Colors.grey.shade300),
-            const SizedBox(width: 10),
-            _buildStatItem('\$ 00.00', 'Amount'),
-          ],
-        ),
+        Row(children: [
+          _buildStatItem('0', 'Available'),
+          const SizedBox(width: 10),
+          Container(width: 1, height: 46, color: Colors.grey.shade300),
+          const SizedBox(width: 10),
+          _buildStatItem('\$ 00.00', 'Amount'),
+        ]),
       ],
     );
   }
@@ -357,30 +476,23 @@ class _MainContentSectionState extends State<MainContentSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
-          'VISITS',
-          style: AppStyle.text14MediumGray8B,
-        ),
+        Text('VISITS', style: AppStyle.text14MediumGray8B),
         const SizedBox(height: 14),
-        Row(
-          children: [
-            _buildStatItem('0', 'Total Visits'),
-            const SizedBox(width: 10),
-            Container(width: 1, height: 48, color: Colors.grey.shade300),
-            const SizedBox(width: 10),
-            _buildStatItem('0', 'Upcoming'),
-          ],
-        ),
+        Row(children: [
+          _buildStatItem('0', 'Total Visits'),
+          const SizedBox(width: 10),
+          Container(width: 1, height: 48, color: Colors.grey.shade300),
+          const SizedBox(width: 10),
+          _buildStatItem('0', 'Upcoming'),
+        ]),
         const SizedBox(height: 9),
-        Row(
-          children: [
-            _buildStatItem('0', 'Canceled'),
-            const SizedBox(width: 10),
-            Container(width: 1, height: 46, color: Colors.grey.shade300),
-            const SizedBox(width: 10),
-            _buildStatItem('0', 'No Shows'),
-          ],
-        ),
+        Row(children: [
+          _buildStatItem('0', 'Canceled'),
+          const SizedBox(width: 10),
+          Container(width: 1, height: 46, color: Colors.grey.shade300),
+          const SizedBox(width: 10),
+          _buildStatItem('0', 'No Shows'),
+        ]),
       ],
     );
   }
@@ -389,69 +501,37 @@ class _MainContentSectionState extends State<MainContentSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          value,
-          style: AppStyle.text16SemiBoldBlack26,
-          overflow: TextOverflow.ellipsis,
-        ),
+        Text(value, style: AppStyle.text16SemiBoldBlack26, overflow: TextOverflow.ellipsis),
         const SizedBox(height: 5),
-        Text(
-          label,
-          style: AppStyle.text11MediumBlack26,
-          overflow: TextOverflow.ellipsis,
-        ),
+        Text(label, style: AppStyle.text11MediumBlack26, overflow: TextOverflow.ellipsis),
       ],
     );
   }
 
-  Widget _buildSectionCard(
-    String title,
-    String content,
-      String icon,
-    String? buttonText,
-  ) {
+  Widget _buildSectionCard(String title, String content, String icon, String? buttonText) {
     return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(
-              title,
-              style: AppStyle.text16MediumGray8B,
-            ),
-          ),
+          Padding(padding: const EdgeInsets.only(left: 8), child: Text(title, style: AppStyle.text16MediumGray8B)),
           const SizedBox(height: 8),
           Container(
-            height: 96,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
+            constraints: const BoxConstraints(minHeight: 88),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Padding(
-              padding: const EdgeInsets.all(27),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
                   ImageShow.svgImgAsset(icon),
-                  const SizedBox(width: 25),
-                  Container(
-                    width: 2,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: AppColors.gray93,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                  ),
                   const SizedBox(width: 20),
-                  Expanded(
-                    child: Text(
-                      content,
-                      style: AppStyle.text14SemiBoldBlack26
-                    ),
-                  ),
-                  if (buttonText != null)
-                   CustomElevatedButton(title: buttonText, onPress: (){})
+                  Container(width: 2, height: 64, decoration: BoxDecoration(color: AppColors.gray93, borderRadius: BorderRadius.circular(40))),
+                  const SizedBox(width: 20),
+                  Expanded(child: Text(content, style: AppStyle.text14SemiBoldBlack26)),
+                  if (buttonText != null) ...[
+                    const SizedBox(width: 12),
+                    CustomElevatedButton(title: buttonText, onPress: () {}),
+                  ],
                 ],
               ),
             ),
@@ -465,7 +545,7 @@ class _MainContentSectionState extends State<MainContentSection> {
     final notesSections = [
       {'title': 'General', 'icon': AppImages.icNote},
       {'title': 'Special Relation', 'icon': AppImages.icStar},
-      {'title': 'Seating Preferences', 'icon':AppImages.icSeating},
+      {'title': 'Seating Preferences', 'icon': AppImages.icSeating},
       {'title': 'Special Note*', 'icon': AppImages.icSpecialNote},
       {'title': 'Allergies', 'icon': AppImages.icNoOrderItem},
     ];
@@ -475,21 +555,12 @@ class _MainContentSectionState extends State<MainContentSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Text(
-              'NOTES',
-              style:AppStyle.text16MediumGray8B
-            ),
-          ),
+          Padding(padding: const EdgeInsets.only(left: 8), child: Text('NOTES', style: AppStyle.text16MediumGray8B)),
           const SizedBox(height: 8),
           Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: notesSections.map((section) {
                   return Column(
@@ -499,29 +570,22 @@ class _MainContentSectionState extends State<MainContentSection> {
                         child: Row(
                           children: [
                             ImageShow.svgImgAsset(section['icon'].toString()),
-                            const SizedBox(width: 26),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    section['title'] as String,
-                                    style: AppStyle.text16SemiBoldBlack26,
-                                  ),
-                                  const SizedBox(height: 8),
-                                   Text(
-                                    'Add notes',
-                                    style:AppStyle.text14MediumWhiteD2 ,
-                                  ),
+                                  Text(section['title'] as String, style: AppStyle.text16SemiBoldBlack26),
+                                  const SizedBox(height: 6),
+                                  Text('Add notes', style: AppStyle.text14MediumWhiteD2),
                                 ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                      if (section != notesSections.last)
-                        Container(height: 2, color: Colors.grey.shade200),
+                      if (section != notesSections.last) Container(height: 2, color: Colors.grey.shade200),
                     ],
                   );
                 }).toList(),
