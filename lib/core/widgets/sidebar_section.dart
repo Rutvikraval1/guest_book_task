@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:guestbook/core/theme/app_style.dart';
+import 'package:guestbook/core/theme/colors.dart';
+import 'package:guestbook/core/utils/app_image.dart';
 
 import '../../core/model/contact_model.dart';
+import 'button/custom_Icon_btn.dart';
 
 class SidebarSection extends StatelessWidget {
   const SidebarSection({super.key});
@@ -9,83 +13,75 @@ class SidebarSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 360,
-      margin: const EdgeInsets.only(left: 28, top: 24),
+      margin: const EdgeInsets.only(left: 28, top: 24,right: 28),
       child: Column(
         children: [
-          // Header with search
-          Container(
-            height: 105,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.arrow_back, color: Color(0xFF666666)),
-                    ),
-                    const Text(
-                      'Settings',
-                      style: TextStyle(
-                        color: Color(0xFF666666),
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Montserrat',
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: const Color(0x1F767680),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Row(
-                    children: [
-                      SizedBox(width: 12),
-                      Icon(Icons.search, color: Color(0x9976767A)),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Search',
-                          style: TextStyle(
-                            color: Color(0x9976767A),
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ),
-                      Icon(Icons.mic, color: Color(0x9976767A)),
-                      SizedBox(width: 12),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 61),
-          // Action buttons
           Row(
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.add, size: 30),
+                icon:  Icon(Icons.arrow_back_ios, color: AppColors.gray60),
               ),
-              const SizedBox(width: 15),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.filter_list, size: 30),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert, size: 30),
+               Text(
+                'Settings',
+                style: AppStyle.text22MediumGray60,
               ),
             ],
           ),
+          const SizedBox(height: 20),
+          Container(
+            height: 44,
+            decoration: BoxDecoration(
+              color: const Color(0x1F767680),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: AppStyle.text17MediumGray7,
+                border: InputBorder.none, // remove underline
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                prefixIcon:  Icon(
+                  Icons.search,
+                  size: 20,
+                  color: AppColors.gray7,
+                ),
+                suffixIcon:  Icon(
+                  Icons.mic,
+                  size: 20,
+                  color: AppColors.gray7,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              CustomIconButton(
+                icon: AppImages.icPlus,
+                backgroundColor: AppColors.black26,
+                onTap: () {
+                },
+              ),
+              const SizedBox(width: 15),
+              CustomIconButton(
+                icon: AppImages.icArchive,
+                backgroundColor: AppColors.gray9,
+                onTap: () {
+                },
+              ),
+              const Spacer(),
+              CustomIconButton(
+                icon: AppImages.icFitter,
+                backgroundColor: AppColors.gray80.withOpacity(0.1),
+                onTap: () {
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
           // Contacts list
           Expanded(
             child: Container(

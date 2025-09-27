@@ -17,7 +17,7 @@ class ImageShow{
       width: width,
       color: colorCode,
       colorBlendMode: blendMode,
-      fit: boxFit,
+      fit: boxFit ?? BoxFit.contain,
     );
   }
 
@@ -30,10 +30,9 @@ class ImageShow{
         BlendMode? blendMode}) {
     return SvgPicture.asset(
       imagePath,
-      height: height,
-      width: width,
+      height: height??24,
+      width: width??24,
       color: colorCode,
-
       fit: boxFit ?? BoxFit.contain,
     );
   }

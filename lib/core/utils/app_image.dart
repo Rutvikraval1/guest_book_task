@@ -2,6 +2,8 @@
 class AppImages{
   // PNG image
   static const String appLogo = 'assets/images/png/ic_logo.png';
+  static const String icProfilePic    = 'assets/images/png/profile_pic.png';
+  static const String icFitter          = 'assets/images/png/fitter.png';
 
   // SVG image
   static const String icCake = 'assets/images/svg/cake.svg';
@@ -21,8 +23,6 @@ class AppImages{
   static const String icNotification = 'assets/images/svg/notification.svg';
   static const String icOpenTickets = 'assets/images/svg/open_tickets.svg';
   static const String icOrderOs = 'assets/images/svg/order_os.svg';
-  static const String icProfilePic    = 'assets/images/svg/profile_pic.svg';
-  static const String icProfilePic1   = 'assets/images/svg/profile_pic1.svg';
   static const String icSeating       = 'assets/images/svg/seating.svg';
   static const String icSpecialNote   = 'assets/images/svg/special_note.svg';
   static const String icStar          = 'assets/images/svg/star.svg';
@@ -31,4 +31,6 @@ class AppImages{
   static const String icVerGroup      = 'assets/images/svg/ver_group.svg';
   static const String icWeddingRing   = 'assets/images/svg/wedding_ring.svg';
   static const String icWifi          = 'assets/images/svg/wifi.svg';
+  static const String icArchive          = 'assets/images/svg/archive.svg';
+  static const String icPlus          = 'assets/images/svg/plus.svg';
 }

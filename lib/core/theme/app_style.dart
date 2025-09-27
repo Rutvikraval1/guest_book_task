@@ -26,10 +26,27 @@ class FontSize{
 }
 
 class AppStyle {
-  static TextStyle text14RegularWhite =   TextStyle(
-      color: AppColors.grey50,
-      fontSize: FontSize.fontSize14,
-      fontFamily: FontName.montserratRegular
+  static TextStyle text21BoldWhite =   TextStyle(
+    color:AppColors.white,
+    fontSize: 21,
+    fontFamily: FontName.montserratBold
+  );
+  static TextStyle text18SemiBoldWhite =   TextStyle(
+      color:AppColors.white,
+      fontSize: 18,
+      fontFamily: FontName.montserratSemiBold
+  );
+
+  static TextStyle text22MediumGray60 =   TextStyle(
+    color:AppColors.gray60,
+    fontSize: 22,
+      fontFamily: FontName.montserratMedium
+  );
+
+  static TextStyle text17MediumGray7 =   TextStyle(
+    color: AppColors.gray7,
+    fontSize: 17,
+      fontFamily: FontName.montserratMedium
   );
 
 

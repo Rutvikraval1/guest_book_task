@@ -61,7 +61,7 @@ class RoundedButtonFill extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: FontName.montserratBold,
-                color: textColor ?? AppColors.grey800,
+                // color: textColor ?? AppColors.grey800,
                 fontSize: fontSizes ?? 14,
               ),
             ),

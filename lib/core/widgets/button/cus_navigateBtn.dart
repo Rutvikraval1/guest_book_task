@@ -24,11 +24,11 @@ class _NavigateBtnState extends State<NavigateBtn> {
       style: ButtonStyle(
         alignment: Alignment.center,
           side: widget.border!=null?MaterialStateProperty.all(const BorderSide(
-              color:AppColors.success400,
+              // color:AppColors.success400,
               width: 0.8,
               style: BorderStyle.solid)):null,
         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-        backgroundColor: MaterialStateProperty.all(widget.backgroundColor??AppColors.success400),
+        // backgroundColor: MaterialStateProperty.all(widget.backgroundColor??AppColors.success400),
         shape: MaterialStateProperty.all(
           const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -36,7 +36,7 @@ class _NavigateBtnState extends State<NavigateBtn> {
       ),
       child: Text(
         widget.text,
-        style: AppStyle.text14RegularWhite,
+        // style: AppStyle.text14RegularWhite,
       ),
       onPressed: () {
         FocusScope.of(context).requestFocus(FocusNode());
