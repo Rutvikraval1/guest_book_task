@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestbook/core/theme/colors.dart';
 import '../../../core/utils/app_image.dart';
 import '../../../core/widgets/asset_img/asset_image_show.dart';
 import '../controllers/splash_controller.dart';
@@ -19,7 +20,7 @@ class SplashScreen extends GetView<SplashController>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ImageShow.imgAsset(AppImages.appLogo,height: 200)
+        child: ImageShow.svgImgAsset(AppImages.icEoLogo,height: 200,colorCode: AppColors.black26)
       ),
     );
   }

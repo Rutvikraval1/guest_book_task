@@ -70,6 +70,11 @@ class AppStyle {
       fontSize: 14,
       fontFamily: FontName.montserratMedium
   );
+  static TextStyle text14SemiBoldBlack26=   TextStyle(
+      color: AppColors.black26,
+      fontSize: 14,
+      fontFamily: FontName.montserratSemiBold
+  );
   static TextStyle text16SemiBoldBlack26=   TextStyle(
       color: AppColors.black26,
     fontSize: 16,
@@ -97,6 +102,16 @@ class AppStyle {
   );
   static TextStyle text14MediumGray8B=   TextStyle(
       color: AppColors.gray8B,
+      fontSize: 14,
+      fontFamily: FontName.montserratMedium
+  );
+  static TextStyle text16MediumGray8B=   TextStyle(
+      color: AppColors.gray8B,
+      fontSize: 16,
+      fontFamily: FontName.montserratMedium
+  );
+  static TextStyle text14MediumWhiteD2=   TextStyle(
+      color: AppColors.whiteD2,
       fontSize: 14,
       fontFamily: FontName.montserratMedium
   );

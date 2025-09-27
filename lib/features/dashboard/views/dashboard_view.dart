@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/widgets/header_left_section.dart';
 import '../../../core/widgets/header_section.dart';
-import '../../../core/widgets/main_content_section.dart';
+import 'main_content_section.dart';
 import '../../../core/widgets/sidebar_section.dart';
 import '../controllers/dashboard_controller.dart';
 

@@ -1,7 +1,6 @@
 
 class AppImages{
   // PNG image
-  static const String appLogo = 'assets/images/png/ic_logo.png';
   static const String icProfilePic    = 'assets/images/png/profile_pic.png';
   static const String icFitter          = 'assets/images/png/fitter.png';
 

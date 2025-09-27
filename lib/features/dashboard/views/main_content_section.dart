@@ -4,7 +4,7 @@ import 'package:guestbook/core/theme/colors.dart';
 import 'package:guestbook/core/utils/app_image.dart';
 import 'package:guestbook/core/widgets/asset_img/asset_image_show.dart';
 
-import 'button/custom_elevated_btn.dart';
+import '../../../core/widgets/button/custom_elevated_btn.dart';
 
 class MainContentSection extends StatefulWidget {
   const MainContentSection({super.key});
@@ -151,7 +151,7 @@ class _MainContentSectionState extends State<MainContentSection> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width/8,
+                                  // width: MediaQuery.of(context).size.width/8,
                                   height: MediaQuery.of(context).size.height/3,
                                   padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
@@ -195,7 +195,7 @@ class _MainContentSectionState extends State<MainContentSection> {
             _buildSectionCard(
               'ALLERGIES',
               'No Allergies',
-              Icons.local_hospital,
+              AppImages.icKitchen,
               'Add',
             ),
             const SizedBox(height: 24),
@@ -203,7 +203,7 @@ class _MainContentSectionState extends State<MainContentSection> {
             _buildSectionCard(
               'UPCOMING VISITS',
               'No Upcoming Visits',
-              Icons.calendar_today,
+              AppImages.icStore,
               'Book A Visit',
             ),
             const SizedBox(height: 25),
@@ -214,12 +214,17 @@ class _MainContentSectionState extends State<MainContentSection> {
             _buildSectionCard(
               'RECENT ORDERS',
               'No Recent Orders to Show',
-              Icons.receipt,
+              AppImages.icDinner,
               null,
             ),
             const SizedBox(height: 24),
-            // Online reviews section
-            _buildOnlineReviewsSection(),
+            _buildSectionCard(
+              'Online reviews',
+              'No Online Review to Show',
+              AppImages.icNoReview,
+              null,
+            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
@@ -402,10 +407,10 @@ class _MainContentSectionState extends State<MainContentSection> {
   Widget _buildSectionCard(
     String title,
     String content,
-    IconData icon,
+      String icon,
     String? buttonText,
   ) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,12 +419,7 @@ class _MainContentSectionState extends State<MainContentSection> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               title,
-              style: const TextStyle(
-                color: Color(0xFF85858B),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Montserrat',
-              ),
+              style: AppStyle.text16MediumGray8B,
             ),
           ),
           const SizedBox(height: 8),
@@ -433,13 +433,13 @@ class _MainContentSectionState extends State<MainContentSection> {
               padding: const EdgeInsets.all(27),
               child: Row(
                 children: [
-                  Icon(icon, size: 32, color: Colors.grey),
+                  ImageShow.svgImgAsset(icon),
                   const SizedBox(width: 25),
                   Container(
                     width: 2,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: const Color(0x4D8E8E93),
+                      color: AppColors.gray93,
                       borderRadius: BorderRadius.circular(40),
                     ),
                   ),
@@ -447,37 +447,11 @@ class _MainContentSectionState extends State<MainContentSection> {
                   Expanded(
                     child: Text(
                       content,
-                      style: const TextStyle(
-                        color: Color(0xFF212121),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat',
-                      ),
+                      style: AppStyle.text14SemiBoldBlack26
                     ),
                   ),
                   if (buttonText != null)
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF212121),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(38),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                      ),
-                      child: Text(
-                        buttonText,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ),
+                   CustomElevatedButton(title: buttonText, onPress: (){})
                 ],
               ),
             ),
@@ -489,33 +463,27 @@ class _MainContentSectionState extends State<MainContentSection> {
 
   Widget _buildNotesSection() {
     final notesSections = [
-      {'title': 'General', 'icon': Icons.note},
-      {'title': 'Special Relation', 'icon': Icons.favorite},
-      {'title': 'Seating Preferences', 'icon': Icons.table_restaurant},
-      {'title': 'Special Note*', 'icon': Icons.star},
-      {'title': 'Allergies', 'icon': Icons.warning},
+      {'title': 'General', 'icon': AppImages.icNote},
+      {'title': 'Special Relation', 'icon': AppImages.icStar},
+      {'title': 'Seating Preferences', 'icon':AppImages.icSeating},
+      {'title': 'Special Note*', 'icon': AppImages.icSpecialNote},
+      {'title': 'Allergies', 'icon': AppImages.icNoOrderItem},
     ];
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+           Padding(
             padding: EdgeInsets.only(left: 16),
             child: Text(
               'NOTES',
-              style: TextStyle(
-                color: Color(0xFF85858B),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Montserrat',
-              ),
+              style:AppStyle.text16MediumGray8B
             ),
           ),
           const SizedBox(height: 8),
           Container(
-            height: 377,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -530,11 +498,7 @@ class _MainContentSectionState extends State<MainContentSection> {
                         height: 72,
                         child: Row(
                           children: [
-                            Icon(
-                              section['icon'] as IconData,
-                              size: 18,
-                              color: Colors.grey,
-                            ),
+                            ImageShow.svgImgAsset(section['icon'].toString()),
                             const SizedBox(width: 26),
                             Expanded(
                               child: Column(
@@ -543,22 +507,12 @@ class _MainContentSectionState extends State<MainContentSection> {
                                 children: [
                                   Text(
                                     section['title'] as String,
-                                    style: const TextStyle(
-                                      color: Color(0xFF212121),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat',
-                                    ),
+                                    style: AppStyle.text16SemiBoldBlack26,
                                   ),
                                   const SizedBox(height: 8),
-                                  const Text(
+                                   Text(
                                     'Add notes',
-                                    style: TextStyle(
-                                      color: Color(0xFFD2D2D2),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Montserrat',
-                                    ),
+                                    style:AppStyle.text14MediumWhiteD2 ,
                                   ),
                                 ],
                               ),
@@ -571,129 +525,6 @@ class _MainContentSectionState extends State<MainContentSection> {
                     ],
                   );
                 }).toList(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildOnlineReviewsSection() {
-    final reviews = [
-      {
-        'platform': 'Google',
-        'review':
-            'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.',
-      },
-      {
-        'platform': 'Yelp',
-        'review':
-            'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.',
-      },
-      {
-        'platform': 'Foursquare',
-        'review':
-            'I highly recommend trying their Japan Chicken. it was bursting with flavor.',
-      },
-      {
-        'platform': 'Zagat',
-        'review':
-            'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.',
-      },
-      {
-        'platform': 'Custom',
-        'review':
-            'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.',
-      },
-    ];
-
-    return Container(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Text(
-              'ONLINE REVIEWS',
-              style: TextStyle(
-                color: Color(0xFF85858B),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Montserrat',
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Container(
-            height: 228,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey.shade200),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: reviews.map((review) {
-                    return Container(
-                      width: 241,
-                      height: 168,
-                      margin: const EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade200),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: const Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(5, (index) {
-                                return const Icon(
-                                  Icons.star,
-                                  color: Colors.orange,
-                                  size: 16,
-                                );
-                              }),
-                            ),
-                            const SizedBox(height: 12),
-                            Expanded(
-                              child: Text(
-                                review['review']!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF666666),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Montserrat',
-                                  height: 1.4,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
               ),
             ),
           ),
