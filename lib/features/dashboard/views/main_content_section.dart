@@ -12,10 +12,6 @@ import '../controllers/dashboard_controller.dart';
 class MainContentSection extends StatelessWidget {
   const MainContentSection({super.key});
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DashboardController>(); // here is fine
@@ -35,7 +31,6 @@ class MainContentSection extends StatelessWidget {
             },
             child: Column(
               children: [
-                // Header card
                 ConstrainedBox(
                   constraints: const BoxConstraints(minHeight: 120),
                   child: Container(
@@ -83,7 +78,6 @@ class MainContentSection extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 6),
                             child: GestureDetector(
                               onTap: (){
-                                // setState(() => selectedIndex = index);
                                 controller.changeIndex(index);
                                 controller.toggleMenuDisable(isValue: true);
                               },
@@ -247,8 +241,6 @@ class MainContentSection extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 28),
-
-                // Reusable section cards
                 controller.isMenuDisable.value?
                   Column(
                     children: [
@@ -329,7 +321,6 @@ class MainContentSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(stats.length * 2 - 1, (index) {
           if (index.isOdd) {
-            // Divider between items
             return Container(
               width: 1,
               height: 40,
@@ -414,7 +405,6 @@ class MainContentSection extends StatelessWidget {
       {'label': 'Loyalty', 'value': 'RF|'},
       {'label': 'Since', 'value': 'Enter'},
       {'label': 'Birthday', 'value': 'Enter'},
-      // {'label': 'Anniversary', 'value': 'Enter'},
     ];
 
     return Column(

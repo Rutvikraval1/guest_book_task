@@ -1,16 +1,30 @@
-# guestbook
+# Guest book
 
-A new Flutter project.
+## 📋 Prerequisites
 
-## Getting Started
+- Flutter SDK (^3.35.4)
+- Dart SDK
+- Android Studio / VS Code with Flutter extensions
+- Android SDK / Xcode (for iOS development)
 
-This project is a starting point for a Flutter application.
+## 🛠️ Installation
 
-A few resources to get you started if this is your first Flutter project:
+1. Install dependencies:
+```bash
+flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Run the application:
+```bash
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="screenshort/1.png" width="250"/></td>
+    <td><img src="screenshort/2.png" width="250"/></td>
+    <td><img src="screenshort/3.png" width="250"/></td>
+  </tr>
+</table>

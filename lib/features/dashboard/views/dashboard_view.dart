@@ -34,7 +34,6 @@ class _ResponsiveBody extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth;
 
-      // If very narrow, stack vertically.
       if (width < 900) {
         return Column(
           children: const [
@@ -51,7 +50,6 @@ class _ResponsiveBody extends StatelessWidget {
           const HeaderLeftSection(),
           const SizedBox(width: 8),
           Obx(() {
-            // This widget will rebuild whenever isMenuDisable changes
             if (controller.isMenuDisable.value) {
               return Row(
                 children: [
