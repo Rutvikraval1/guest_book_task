@@ -49,6 +49,21 @@ class AppStyle {
       fontFamily: FontName.montserratMedium
   );
 
+  static TextStyle text20MediumWhite=   TextStyle(
+    color: AppColors.white,
+    fontSize: 20,
+      fontFamily: FontName.montserratMedium
+  );
 
+  static TextStyle text22MediumBlack26=   TextStyle(
+    color: AppColors.black26,
+    fontSize: 22,
+      fontFamily: FontName.montserratMedium
+  );
+  static TextStyle text14MediumBlack26=   TextStyle(
+      color: AppColors.black26,
+      fontSize: 14,
+      fontFamily: FontName.montserratMedium
+  );
 }
 

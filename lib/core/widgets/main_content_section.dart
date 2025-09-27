@@ -6,14 +6,13 @@ class MainContentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 27, top: 83),
+      margin: const EdgeInsets.only(left: 27, top: 24),
       child: SingleChildScrollView(
         child: Column(
           children: [
             // Guest Book Header Card
             Container(
               width: double.infinity,
-              height: 215,
               margin: const EdgeInsets.only(right: 27),
               decoration: BoxDecoration(
                 color: Colors.white,
