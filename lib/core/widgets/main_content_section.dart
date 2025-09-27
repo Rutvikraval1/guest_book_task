@@ -1,236 +1,193 @@
 import 'package:flutter/material.dart';
+import 'package:guestbook/core/theme/app_style.dart';
+import 'package:guestbook/core/theme/colors.dart';
+import 'package:guestbook/core/utils/app_image.dart';
+import 'package:guestbook/core/widgets/asset_img/asset_image_show.dart';
 
-class MainContentSection extends StatelessWidget {
+import 'button/custom_elevated_btn.dart';
+
+class MainContentSection extends StatefulWidget {
   const MainContentSection({super.key});
+
+  @override
+  State<MainContentSection> createState() => _MainContentSectionState();
+}
+
+class _MainContentSectionState extends State<MainContentSection> {
+  int selectedIndex = 0;
+
+  final List<String> tabs = [
+    'Profile',
+    'Reservation',
+    'Payment',
+    'Feedback',
+    'Order History',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 27, top: 24),
+      margin: const EdgeInsets.only(left: 20, top: 24, right: 20),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            // Guest Book Header Card
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.only(right: 27),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
               ),
+              padding: EdgeInsets.symmetric(vertical: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 54,
-                    height: 54,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(27),
-                    ),
-                    child: const Icon(Icons.book, size: 30, color: Colors.grey),
-                  ),
+                  ImageShow.svgImgAsset(AppImages.icGuestBook, height: 45),
                   const SizedBox(height: 12),
-                  const Text(
-                    'Guest Book',
-                    style: TextStyle(
-                      color: Color(0xFF212121),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Montserrat',
-                    ),
-                  ),
+                  Text('Guest Book', style: AppStyle.text16SemiBoldBlack26),
                   const SizedBox(height: 12),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      'The guest book feature remembers your guests\' dietary needs, allergies, and favorite\ndishes. It organizes dining preferences for a customized and memorable\nexperience, ensuring each visit is tailored to their individual needs.',
+                      'The guest book feature remembers your guests dietary needs, allergies, and favorite'
+                      'dishes. It organizes dining preferences for a customized and memorable'
+                      'experience, ensuring each visit is tailored to their individual needs.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF44474E),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Montserrat',
-                        height: 1.5,
-                      ),
+                      style: AppStyle.text16RegularGray4E,
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            // Tabs
-            Container(
-              width: 623,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  _buildTab('Profile', true),
-                  _buildTab('Reservation', false),
-                  _buildTab('Payment', false),
-                  _buildTab('Feedback', false),
-                  _buildTab('Order History', false),
-                ],
+            Center(
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                alignment: Alignment.center,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: tabs.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: _buildTab(tabs[index], selectedIndex == index),
+                    );
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 18),
-            // Profile Card
             Container(
               width: double.infinity,
-              height: 364,
-              margin: const EdgeInsets.only(right: 27),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Stack(
-                children: [
-                  // Vertical divider
-                  Positioned(
-                    top: 16,
-                    left: 221,
-                    child: Container(
-                      width: 2,
-                      height: 332,
-                      decoration: BoxDecoration(
-                        color: const Color(0x4D8E8E93),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                    ),
-                  ),
-                  // Profile section
-                  Positioned(
-                    top: 68,
-                    left: 10,
-                    child: SizedBox(
-                      width: 207,
-                      height: 196,
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 200,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 28,
                             backgroundColor: Colors.grey,
-                            child: Icon(Icons.person, color: Colors.white),
+                            child: ImageShow.imgAsset(AppImages.icProfilePic),
                           ),
                           const SizedBox(height: 16),
-                          const Text(
+                          Text(
                             'Lia Thomas',
-                            style: TextStyle(
-                              color: Color(0xFF212121),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
-                            ),
+                            style: AppStyle.text16SemiBoldBlack26,
                           ),
                           const SizedBox(height: 8),
-                          const Text(
+                          Text(
                             'lia.thomas516@reddit.com',
-                            style: TextStyle(
-                              color: Color(0xFF212121),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Montserrat',
-                            ),
+                            style: AppStyle.text12MediumBlack26,
                           ),
-                          const Text(
+                          Text(
                             '+1 212-450-7890',
-                            style: TextStyle(
-                              color: Color(0xFF212121),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Montserrat',
-                            ),
+                            style: AppStyle.text12MediumBlack26,
                           ),
                           const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF212121),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                            ),
-                            child: const Text(
-                              'Add Tags',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
+                          CustomElevatedButton(
+                            title: 'Add Tags',
+                            onPress: () {},
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  // Stats section
-                  Positioned(
-                    top: 16,
-                    left: 238,
-                    child: Container(
-                      width: 570,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8F8F8),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: _buildStatsRow(),
+                    VerticalDivider(
+                      color: const Color(0x4D8E8E93),
+                      thickness: 2,
+                      endIndent: 10,
+                      indent: 10,
+                      width: 2,
                     ),
-                  ),
-                  // Personal info section
-                  Positioned(
-                    top: 118,
-                    left: 238,
-                    child: Container(
-                      width: 168,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8F8F8),
-                        borderRadius: BorderRadius.circular(10),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteF8,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: _buildStatsRow(),
+                            ),
+                            SizedBox(height: 16,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width/8,
+                                  height: MediaQuery.of(context).size.height/3,
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.whiteF8,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: _buildPersonalInfo(),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width/8,
+                                  height: MediaQuery.of(context).size.height/3,
+                                  padding: const EdgeInsets.all(13),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.whiteF8,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: _buildLoyaltySection(),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width/8,
+                                  height: MediaQuery.of(context).size.height/3,
+                                  padding: const EdgeInsets.all(13),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.whiteF8,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: _buildVisitsSection(),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      child: _buildPersonalInfo(),
                     ),
-                  ),
-                  // Loyalty section
-                  Positioned(
-                    top: 118,
-                    left: 451,
-                    child: Container(
-                      width: 174,
-                      height: 160,
-                      padding: const EdgeInsets.all(13),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8F8F8),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: _buildLoyaltySection(),
-                    ),
-                  ),
-                  // Visits section
-                  Positioned(
-                    top: 118,
-                    left: 638,
-                    child: Container(
-                      width: 170,
-                      height: 160,
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8F8F8),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: _buildVisitsSection(),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 31),
@@ -270,23 +227,21 @@ class MainContentSection extends StatelessWidget {
   }
 
   Widget _buildTab(String text, bool isActive) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: isActive ? const Color(0xFF666666) : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isActive ? Colors.white : Colors.black,
-              fontSize: 16,
-              fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-              fontFamily: 'Montserrat',
-            ),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: isActive ? const Color(0xFF666666) : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(
+          color: isActive ? AppColors.white : AppColors.black26,
+          fontSize: 16,
+          fontFamily: isActive
+              ? FontName.montserratSemiBold
+              : FontName.montserratMedium,
         ),
       ),
     );
@@ -307,32 +262,16 @@ class MainContentSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              stat['value']!,
-              style: const TextStyle(
-                color: Color(0xFF212121),
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Montserrat',
-              ),
-            ),
+            Text(stat['value']!, style: AppStyle.text16SemiBoldBlack26),
             const SizedBox(height: 12),
-            Text(
-              stat['label']!,
-              style: const TextStyle(
-                color: Color(0xFF212121),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Montserrat',
-              ),
-            ),
+            Text(stat['label']!, style: AppStyle.text12MediumBlack26),
           ],
         );
       }).toList(),
     );
   }
 
-  Widget _buildPersonalInfo() {
+  Widget  _buildPersonalInfo() {
     final info = [
       {'label': 'Loyalty', 'value': 'RF|'},
       {'label': 'Since', 'value': 'Enter'},
@@ -343,32 +282,33 @@ class MainContentSection extends StatelessWidget {
     return Column(
       children: info.map((item) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Column(
             children: [
-              Text(
-                item['label']!,
-                style: const TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Montserrat',
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item['label']!,
+                    style: AppStyle.text14MediumGray60
+                  ),
+                  Text(
+                    item['value']!,
+                    style: TextStyle(
+                      color: item['label'] == 'Loyalty'
+                          ? AppColors.black26
+                          : AppColors.whiteD2,
+                      fontSize: 14,
+                      fontWeight: item['label'] == 'Loyalty'
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                      fontFamily: item['label'] == 'Loyalty'?
+                      FontName.montserratSemiBold: FontName.montserratMedium,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                item['value']!,
-                style: TextStyle(
-                  color: item['label'] == 'Loyalty'
-                      ? const Color(0xFF212121)
-                      : const Color(0xFFD2D2D2),
-                  fontSize: 14,
-                  fontWeight: item['label'] == 'Loyalty'
-                      ? FontWeight.w600
-                      : FontWeight.w500,
-                  fontFamily: 'Montserrat',
-                ),
-              ),
+              Divider()
             ],
           ),
         );
@@ -380,14 +320,9 @@ class MainContentSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+         Text(
           'LOYALTY',
-          style: TextStyle(
-            color: Color(0xFF85858B),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Montserrat',
-          ),
+          style: AppStyle.text14MediumGray8B,
         ),
         const SizedBox(height: 14),
         Row(
@@ -417,14 +352,9 @@ class MainContentSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+         Text(
           'VISITS',
-          style: TextStyle(
-            color: Color(0xFF85858B),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Montserrat',
-          ),
+          style: AppStyle.text14MediumGray8B,
         ),
         const SizedBox(height: 14),
         Row(
@@ -456,31 +386,27 @@ class MainContentSection extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(
-            color: Color(0xFF212121),
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Montserrat',
-          ),
+          style: AppStyle.text16SemiBoldBlack26,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 5),
         Text(
           label,
-          style: const TextStyle(
-            color: Color(0xFF212121),
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Montserrat',
-          ),
+          style: AppStyle.text11MediumBlack26,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
   }
 
-  Widget _buildSectionCard(String title, String content, IconData icon, String? buttonText) {
+  Widget _buildSectionCard(
+    String title,
+    String content,
+    IconData icon,
+    String? buttonText,
+  ) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(right: 27),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -572,7 +498,6 @@ class MainContentSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(right: 27),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -605,7 +530,11 @@ class MainContentSection extends StatelessWidget {
                         height: 72,
                         child: Row(
                           children: [
-                            Icon(section['icon'] as IconData, size: 18, color: Colors.grey),
+                            Icon(
+                              section['icon'] as IconData,
+                              size: 18,
+                              color: Colors.grey,
+                            ),
                             const SizedBox(width: 26),
                             Expanded(
                               child: Column(
@@ -638,10 +567,7 @@ class MainContentSection extends StatelessWidget {
                         ),
                       ),
                       if (section != notesSections.last)
-                        Container(
-                          height: 2,
-                          color: Colors.grey.shade200,
-                        ),
+                        Container(height: 2, color: Colors.grey.shade200),
                     ],
                   );
                 }).toList(),
@@ -655,16 +581,35 @@ class MainContentSection extends StatelessWidget {
 
   Widget _buildOnlineReviewsSection() {
     final reviews = [
-      {'platform': 'Google', 'review': 'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.'},
-      {'platform': 'Yelp', 'review': 'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.'},
-      {'platform': 'Foursquare', 'review': 'I highly recommend trying their Japan Chicken. it was bursting with flavor.'},
-      {'platform': 'Zagat', 'review': 'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.'},
-      {'platform': 'Custom', 'review': 'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.'},
+      {
+        'platform': 'Google',
+        'review':
+            'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.',
+      },
+      {
+        'platform': 'Yelp',
+        'review':
+            'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.',
+      },
+      {
+        'platform': 'Foursquare',
+        'review':
+            'I highly recommend trying their Japan Chicken. it was bursting with flavor.',
+      },
+      {
+        'platform': 'Zagat',
+        'review':
+            'The food was absolutely delicious and served with great presentation. The staff were friendly and attentive.',
+      },
+      {
+        'platform': 'Custom',
+        'review':
+            'The service was prompt and attentive, making our evening enjoyable. Highly recommend this gem.',
+      },
     ];
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(right: 27),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -713,7 +658,10 @@ class MainContentSection extends StatelessWidget {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(24),
                               ),
-                              child: const Icon(Icons.star, color: Colors.orange),
+                              child: const Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                              ),
                             ),
                             const SizedBox(height: 12),
                             Row(
